@@ -7,6 +7,13 @@ parameters:
     locale: 'en'
 
 services:
+    my.oauth_aware.user_provider.service:
+        class:  UserBundle\Security\Provider\MyFOSUBProvider
+        arguments:
+            -   '@fos_user.user_manager'
+            -   { facebook: facebookId, google: googleId }
+            -   '@doctrine'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

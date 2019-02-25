@@ -1,0 +1,60 @@
+<div id="backgroubd">
+	
+	<form>
+		<div id="page-title">
+				<h2>Login</h2>
+		</div>
+			<ul id="social-connect">
+				<li>
+					<a href="#" onclick="fb_login();">
+						Connect with Facebook
+					</a>
+				</li>
+				<li>
+					<a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'})}}">
+						Connect with Google
+					</a>
+				</li>
+
+			</ul>
+	</form>
+	<div id="fb-root"></div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+	<script>
+	window.fbAsynInit = function(){
+		FB.init({
+			appId		: '2454187657989357',
+			channelUrl	: '//mysite.com/channel.html',
+			status 		: true,
+			xfbml		: true
+		});
+	};
+
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/all.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	function fb_login() {
+		FB.getLoginStatus(function(response){
+			if (response.status === 'connected') {
+				document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+			} else {
+				FB.login(function(response){
+					if (response.authResponse) {
+						document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"})}}";
+					}
+				}, {scope: 'email'});
+			}
+		});
+	}
+
+	</script>
+
+
+
+</div>
