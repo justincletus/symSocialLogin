@@ -18,12 +18,6 @@ security:
         main:
             pattern: ^/
             # user_checker:   fos_user.user_checker
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-            logout: true
-            anonymous: true
-
             oauth:
                 resource_owners:
                     facebook:   "/secured/login_facebook"
@@ -32,6 +26,12 @@ security:
                 failure_path:   fos_user_security_login
                 oauth_user_provider:
                     service: my.oauth_aware.user_provider.service
+
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout: true
+            anonymous: true
 
             
 
