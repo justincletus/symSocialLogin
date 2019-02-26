@@ -8,7 +8,6 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
         fos_userbundle:
             id: fos_user.user_provider.username
 
@@ -19,12 +18,22 @@ security:
         main:
             pattern: ^/
             # user_checker:   fos_user.user_checker
+            oauth:
+                resource_owners:
+                    facebook:   "/secured/login_facebook"
+                    google: "/secured/login_google"
+                login_path: fos_user_security_login
+                failure_path:   fos_user_security_login
+                oauth_user_provider:
+                    service: my.oauth_aware.user_provider.service
+
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-
             logout: true
             anonymous: true
+
+            
 
             # activate different ways to authenticate
 
